@@ -23,15 +23,27 @@ st.set_page_config(
     page_title="Team Antigravity - Recruiter AI Dashboard",
     page_icon="🤖",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="collapsed"
+)
+
+# Hide sidebar completely using CSS
+st.markdown(
+    """
+    <style>
+        [data-testid="stSidebar"] {
+            display: none;
+        }
+        [data-testid="collapsedControl"] {
+            display: none;
+        }
+    </style>
+    """,
+    unsafe_allow_html=True
 )
 
 # Title and Layout Setup
 st.title("🤖 Recruiter AI: Candidate Discovery & Ranking")
-st.markdown("### INDIA.RUNS Hackathon Submission — Team Antigravity")
 
-# Sidebar information
-st.sidebar.image("https://redrob.com/images/redrob-logo.png", width=150)
 
 
 # Load local pre-computed submission.csv if present
