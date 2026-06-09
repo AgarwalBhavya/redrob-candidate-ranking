@@ -32,7 +32,7 @@
 * **Domain Expertise**: Production-level experience with embedding-based retrieval (SentenceTransformers, BGE, E5) and vector databases (Pinecone, Qdrant, Milvus, FAISS).
 * **Engineering Mindset**: Strong Python coding skills; product-building ("shipper") mentality rather than academic/pure research-only.
 * **Pedigree**: Rejection/downweighting of candidates with service/consulting-only backgrounds (TCS, Infosys, Wipro, Accenture, Cognizant, Capgemini, etc.) unless they have product company experience.
-* **Availability/Logistics**: India-based (Noida/Pune preferred), short notice period (sub-30 days preferred).
+* **Logistics**: India-based (Noida/Pune preferred), short notice period (sub-30 days preferred).
 
 ### Which candidate signals are most important for determining relevance? / How does your solution evaluate candidate fit beyond keyword matching?
 * **Semantic Cosine Similarity**: SentenceTransformers embeds the profile's summary and career description to compare against the JD semantic meaning rather than exact word matches.
@@ -87,13 +87,55 @@
 
 ---
 
-## Slide 6: Results & Verification
-### Auto-Validator Compliance
-* Ran `validate_submission.py` successfully: **"Submission is valid."**
-* Confirms UTF-8 encoding, exact 100-candidate size, monotonic non-increasing scores, and ascending candidate_id tie-breaking.
+## Slide 6: End-to-End Workflow
+### What is the complete workflow from JD input to ranked candidate output?
+1. **Load & Clean**: Load candidates from `candidates.jsonl` and dynamically check and filter out 181 honeypot profiles.
+2. **Text Construction**: Aggregate headline, summary, skills, and career descriptions to build a unified search text for each candidate.
+3. **Stage 1 (Retrieval)**: Index all profiles using TF-IDF and calculate cosine similarity against a keyword representation of the JD, retaining the top 2,000 candidates.
+4. **Stage 2 (Semantic Re-ranking)**: Encode candidate and JD texts using a local offline SentenceTransformers model and compute cosine similarity.
+5. **Factor Integration**: Compute 6 heuristic multipliers (YoE, role fit, company type, location, notice period, active response rate) and multiply them with the semantic similarity score.
+6. **Sort & Output**: Sort candidates by final score descending and candidate_id ascending (to break ties). Generate custom justifications and output the top 100 to `submission.csv`.
 
-### Performance Summary
-* **Execution Time**: **< 15 seconds** for 100k candidates on CPU.
-* **Memory Usage**: **< 1.2 GB** RAM.
-* **Honeypot Rate**: **0%** in the top 100 shortlist (disqualification rate is > 10%).
-* **Quality**: Surfaced highly relevant Senior Machine Learning Engineers with proven NLP/IR search/retrieval backgrounds from India's top product engineering spaces (CRED, Swiggy, Rephrase.ai, Paytm, Sarvam AI, Ola, etc.).
+---
+
+## Slide 7: System Architecture
+* **Stage 1: Sparse Retrieval (Recall Stage)**:
+  * **Algorithm**: TF-IDF Vector Space Model (optimized via `scikit-learn`).
+  * **Objective**: Fast keyword pre-filtering of the 100k candidate pool down to 2,000 matches.
+  * **Timing**: Under 3 seconds.
+* **Stage 2: Dense Semantic Re-ranking & Heuristics (Precision Stage)**:
+  * **Model**: Local offline SentenceTransformers (`all-MiniLM-L6-v2`) on CPU.
+  * **Objective**: Extract rich semantic matching and evaluate profile metadata against recruiter criteria.
+  * **Expert Heuristic Rules**: Apply multiplicative factors for pedigree, notice period, location, and platform activity.
+  * **Timing**: Under 8 seconds.
+* **Honeypot Filter**: Integrated early as a strict logic check before retrieval.
+
+---
+
+## Slide 8: Results & Performance
+### What results or insights demonstrate ranking quality?
+* **High-Pedigree Candidates**: Shortlist matches senior MLE profiles with relevant vector search/NLP backgrounds from top product firms (CRED, Swiggy, Zomato, Niramai, Microsoft, Paytm, Zoho, Sarvam AI, etc.).
+* **0% Honeypot Rate**: The top 100 shortlist contains zero honeypots (disqualification limit is > 10%).
+* **No Keyword Stuffers**: Filters out candidates who stuffed AI terms into their profile but hold unrelated roles.
+
+### How does your solution meet the challenge's runtime and compute constraints?
+* **Speed**: Runs end-to-end on CPU in **under 15 seconds** (well within the 5-minute constraint).
+* **Memory**: Consumes **< 1.2 GB** RAM (well within the 16 GB constraint).
+* **Offline Capability**: The model is saved locally (`model/all-MiniLM-L6-v2/`) to run 100% network-free in sandboxed Docker containers.
+
+---
+
+## Slide 9: Technologies Used
+### What technologies, frameworks, and tools were used and why were they selected for this solution?
+* **`sentence-transformers` (with `all-MiniLM-L6-v2` model)**: Standard, compact, and highly optimized sentence embedding model (22M parameters) that yields state-of-the-art semantic representation on CPU.
+* **`scikit-learn` (TfidfVectorizer)**: Chosen for its highly optimized C implementation of TF-IDF, enabling extremely fast pre-filtering of 100k records.
+* **`numpy` & `pandas`**: For fast, vectorised array calculations and data sorting.
+* **`git`**: For version control and codebase tracking.
+
+---
+
+## Slide 10: Submission Assets
+* **GitHub Repository URL**: https://github.com/AgarwalBhavya/redrob-candidate-ranking.git (Contains reproducible code, configuration, metadata, and local model weights).
+* **HuggingFace Space Sandbox / Demo Link**: https://huggingface.co/spaces/bhavya-agarwal/redrob-ranker
+* **Ranked Output File**: `submission.csv` (100% compliant, validated by `validate_submission.py`).
+* **Walkthrough / Demo Video Link**: *(Insert your Loom or Drive screen recording link here)*.
