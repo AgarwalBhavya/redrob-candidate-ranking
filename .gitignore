@@ -1,0 +1,10 @@
+candidates.jsonl
+candidates.jsonl.gz
+.DS_Store
+__pycache__/
+*.log
+honeypot_ids.json
+explore_*.py
+dump_candidates.py
+inspect_yoe_anom.py
+find_all_honeypots.py

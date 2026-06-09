@@ -1,0 +1,45 @@
+# Redrob Hackathon — Submission Metadata
+team_name: "Team Antigravity"
+
+primary_contact:
+  name: "Bhavya Agarwal"
+  email: "bhavya.agarwal@example.com"
+  phone: "+91-9999999999"
+
+team_members:
+  - name: "Bhavya Agarwal"
+    email: "bhavya.agarwal@example.com"
+    role: "ML Engineer"
+
+github_repo: "https://github.com/bhavya-agarwal/redrob-candidate-ranking"
+sandbox_link: "https://huggingface.co/spaces/bhavya-agarwal/redrob-ranker"
+reproduce_command: "python rank.py --candidates ./candidates.jsonl --out ./submission.csv"
+
+compute:
+  platform: "Windows Local PC"
+  cpu_cores: 8
+  ram_gb: 16
+  python_version: "3.13.0"
+  os: "Windows 11"
+  uses_gpu_for_inference: false
+  has_network_during_ranking: false
+  pre_computation_required: false
+  pre_computation_time_minutes: 0
+
+ai_tools_used:
+  - "Claude"
+  - "Gemini"
+  - "Cursor"
+
+ai_usage_summary: |
+  Used Gemini (via Antigravity) for codebase exploration, honeypot detection, ranking logic design, and implementation review.
+
+methodology_summary: |
+  Two-stage retrieval and re-ranking architecture. First-stage BM25 keyword matching filters 100k candidates to the top 2000. Second-stage re-ranking uses local SentenceTransformer semantic similarity combined with heuristics for experience (target 5-9 years), company pedigree, notice period, location, and platform activity. Logical contradictions are filtered out as honeypots.
+
+declarations:
+  read_submission_spec: true
+  code_is_original_work: true
+  no_collusion: true
+  honeypot_check_done: true
+  reproduction_tested: true
