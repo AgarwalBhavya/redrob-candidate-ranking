@@ -1,3 +1,14 @@
+---
+title: Redrob Candidate Ranker
+emoji: 🤖
+colorFrom: indigo
+colorTo: purple
+sdk: streamlit
+sdk_version: 1.52.1
+app_file: app.py
+pinned: false
+---
+
 # Redrob Hackathon Intelligent Candidate discovery & ranking system
 
 This repository contains the candidate ranking engine for the Senior/Principal Machine Learning Engineer (applied NLP/IR) role.
