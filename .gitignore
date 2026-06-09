@@ -6,6 +6,7 @@ candidates.jsonl.gz
 .DS_Store
 __pycache__/
 *.log
+.idea/
 
 # Original hackathon bundle files (ignored to keep GitHub clean)
 *.docx
