@@ -14,6 +14,7 @@ sample_candidates.json
 sample_submission.csv
 submission_metadata_template.yaml
 validate_submission.py
+submission.xlsx
 
 # Scripts used during exploration (ignored)
 honeypot_ids.json
