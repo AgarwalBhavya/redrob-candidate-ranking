@@ -32,23 +32,7 @@ st.markdown("### INDIA.RUNS Hackathon Submission — Team Antigravity")
 
 # Sidebar information
 st.sidebar.image("https://redrob.com/images/redrob-logo.png", width=150)
-st.sidebar.header("System Statistics")
-st.sidebar.info(
-    "**Two-Stage Architecture**:\n"
-    "- Stage 1: TF-IDF (Recall 100k -> 2k)\n"
-    "- Stage 2: SentenceTransformers + Heuristics (Precision 2k -> 100)\n\n"
-    "**Performance on 100k pool**:\n"
-    "- **Runtime**: < 15 seconds\n"
-    "- **Memory**: < 1.2 GB RAM\n"
-    "- **Honeypot Filter**: 181/100,000"
-)
 
-st.sidebar.header("About the Team")
-st.sidebar.markdown(
-    "**Team Name**: Team Antigravity\n"
-    "**Leader**: Bhavya Agarwal\n"
-    "**Repo**: [GitHub Link](https://github.com/AgarwalBhavya/redrob-candidate-ranking)"
-)
 
 # Load local pre-computed submission.csv if present
 csv_path = "submission.csv"
