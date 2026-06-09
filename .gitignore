@@ -1,8 +1,21 @@
+# Raw candidate dataset
 candidates.jsonl
 candidates.jsonl.gz
+
+# System and editor files
 .DS_Store
 __pycache__/
 *.log
+
+# Original hackathon bundle files (ignored to keep GitHub clean)
+*.docx
+candidate_schema.json
+sample_candidates.json
+sample_submission.csv
+submission_metadata_template.yaml
+validate_submission.py
+
+# Scripts used during exploration (ignored)
 honeypot_ids.json
 explore_*.py
 dump_candidates.py
