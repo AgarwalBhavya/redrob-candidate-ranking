@@ -1,6 +1,6 @@
-# Redrob Hackathon — Intelligent Candidate discovery & ranking system
+# Redrob Hackathon Intelligent Candidate discovery & ranking system
 
-This repository contains the candidate ranking engine for the Senior/Principal Machine Learning Engineer (applied NLP/IR) role, built by **Team Antigravity**.
+This repository contains the candidate ranking engine for the Senior/Principal Machine Learning Engineer (applied NLP/IR) role.
 
 Our solution leverages a two-stage information retrieval pipeline to scale to 100,000 candidates on CPU within the 5-minute wall-clock time limit.
 
